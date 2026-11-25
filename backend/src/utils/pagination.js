@@ -1,0 +1,9 @@
+export function parsePagination(query = {}, { maxLimit = 100, defaultLimit = 20 } = {}) {
+  const page = Math.max(1, Number.parseInt(query.page, 10) || 1)
+  const limit = Math.min(maxLimit, Math.max(1, Number.parseInt(query.limit, 10) || defaultLimit))
+  return { page, limit, skip: (page - 1) * limit, take: limit }
+}
+
+export function pageMeta(total, { page, limit }) {
+  return { total, page, limit, totalPages: Math.ceil(total / limit) }
+}
